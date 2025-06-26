@@ -49,7 +49,7 @@ async def handler(websocket):
 
 async def main():
     async with websockets.serve(handler, "0.0.0.0", 8765):
-        logging.info("✅ Servidor WebChat iniciado em ws://localhost:8765")
+        logging.info("✅ Servidor WebChat iniciado em ws://pychat-blhc.onrender.com")
         await asyncio.Future()
 
 if __name__ == "__main__":
