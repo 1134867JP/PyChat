@@ -1,4 +1,3 @@
-// Seu código script.js aqui
 document.addEventListener("DOMContentLoaded", () => {
     const messageList = document.getElementById('message-list');
     const messageForm = document.getElementById('message-form');
@@ -15,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     promptForUserName();
 
-    const socket = new WebSocket('wss://pychat-blhc.onrender.com');
+    const socket = new WebSocket('ws://localhost:8765');
 
     function addMessageToUI({ type, user, text, timestamp }) {
         const messageElement = document.createElement('div');
@@ -26,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (type === 'join') {
             messageElement.classList.add('system');
             messageContent = `<div><strong>${user}</strong> entrou na sala.</div>`;
+        } else if (type === 'leave') {
+            messageElement.classList.add('system');
+            messageContent = `<div><strong>${user}</strong> saiu da sala.</div>`;
         } else {
             if (user === userName) {
                 messageElement.classList.add('sent');
@@ -69,12 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     socket.onclose = () => {
         console.log("Desconectado do servidor de chat.");
-        addMessageToUI({ type: 'system', user: 'Sistema', text: 'Você foi desconectado.' });
+        addMessageToUI({ type: 'system', text: 'Você foi desconectado.' });
     };
 
     socket.onerror = (error) => {
         console.error("Erro no WebSocket:", error);
-        addMessageToUI({ type: 'system', user: 'Sistema', text: 'Erro de conexão com o servidor.' });
+        addMessageToUI({ type: 'system', text: 'Erro de conexão com o servidor.' });
     };
 
     messageForm.addEventListener('submit', (event) => {
@@ -83,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (messageText && socket.readyState === WebSocket.OPEN) {
             const messageData = {
-                type: 'chat', // Já está 'chat', o que é correto para seu servidor
+                type: 'message',
                 user: userName,
                 text: messageText
             };

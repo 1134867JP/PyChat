@@ -1,46 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PyChat Online</title>
-    <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>Web Chat</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="background-top"></div>
-
     <div class="chat-container">
         <div class="left-panel">
-            <div class="left-header">
-                <h2>PyChat</h2>
-            </div>
+            <header class="left-header">
+                <h3>Salas de Chat</h3>
+            </header>
             <div class="contact-list">
                 <div class="contact active">
-                    <p class="contact-name">Sala Principal</p>
-                    <p class="last-message">Bem-vindo(a) ao chat!</p>
+                    <div class="contact-info">
+                        <p class="contact-name"># geral</p>
+                        <p class="last-message">Chat principal do grupo</p>
+                    </div>
                 </div>
-                </div>
-        </div>
-
-        <div class="chat-window">
-            <div class="chat-header">
-                <h3>PyChat - Sala Principal</h3>
             </div>
-            
-            <div class="message-list" id="message-list">
-                </div>
-
-            <div class="message-input-area">
-                <form id="message-form">
-                    <input type="text" id="message-input" placeholder="Digite sua mensagem..." autocomplete="off">
+        </div>
+        
+        <div class="chat-window">
+            <header class="chat-header">
+                <p># geral</p>
+            </header>
+            <main id="message-list" class="message-list"></main>
+            <footer class="message-input-area">
+                <form id="message-form" class="message-form">
+                    <input type="text" id="message-input" placeholder="Digite uma mensagem" autocomplete="off">
                     <button type="submit" class="send-button">
-                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3zM2.934 19.268L18.67 12.028 2.934 4.789 2.934 9.071 12.247 12.028 2.934 14.986 2.934 19.268z"></path></svg>
+                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z"></path></svg>
                     </button>
                 </form>
-            </div>
+            </footer>
         </div>
     </div>
+    <div class="background-bottom"></div>
 
     <script src="script.js"></script>
 </body>

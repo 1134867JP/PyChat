@@ -24,15 +24,18 @@ async def handler(websocket):
     CONNECTED_CLIENTS.add(websocket)
     logging.info(f"Novo cliente conectado. Total: {len(CONNECTED_CLIENTS)}")
     
+    user_name = None
     try:
         async for message in websocket:
             try:
                 data = json.loads(message)
                 data['timestamp'] = datetime.now().strftime('%H:%M')
 
-                log_message = f"Mensagem recebida de {data.get('user', 'desconhecido')}: {data.get('text', '')}"
                 if data.get('type') == 'join':
-                    log_message = f"Usuário {data.get('user', 'desconhecido')} entrou no chat."
+                    user_name = data.get('user', 'desconhecido')
+                    log_message = f"Usuário {user_name} entrou no chat."
+                else:
+                    log_message = f"Mensagem recebida de {data.get('user', 'desconhecido')}: {data.get('text', '')}"
                 
                 logging.info(log_message)
                 
@@ -45,11 +48,20 @@ async def handler(websocket):
 
     finally:
         CONNECTED_CLIENTS.remove(websocket)
-        logging.info(f"Cliente desconectado. Total: {len(CONNECTED_CLIENTS)}")
+        if user_name:
+            leave_message = {
+                'type': 'leave',
+                'user': user_name,
+                'timestamp': datetime.now().strftime('%H:%M')
+            }
+            await broadcast(json.dumps(leave_message))
+            logging.info(f"Usuário {user_name} saiu do chat. Total: {len(CONNECTED_CLIENTS)}")
+        else:
+            logging.info(f"Cliente desconectado (sem nome de usuário). Total: {len(CONNECTED_CLIENTS)}")
 
 async def main():
     async with websockets.serve(handler, "0.0.0.0", 8765):
-        logging.info("✅ Servidor WebChat iniciado em ws://pychat-blhc.onrender.com")
+        logging.info("✅ Servidor WebChat iniciado em ws://localhost:8765")
         await asyncio.Future()
 
 if __name__ == "__main__":
