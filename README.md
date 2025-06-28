@@ -8,7 +8,7 @@ Este projeto tem como objetivo implementar um chat funcional via terminal e inte
 
 ## 👨‍💻 Desenvolvido por:
 
-- João Pedro Rodrigue — 1134867  
+- João Pedro Rodrigues — 1134867  
 - Nycolas Musskopf Fachi — 1134317
 
 ---
